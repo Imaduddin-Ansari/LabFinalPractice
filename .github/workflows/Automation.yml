@@ -37,7 +37,7 @@ jobs:
           npm install
           node server.js &
           sleep 5
-          curl -X POST https://localhost:3000/health
+          curl http://localhost:3000/health
           pkill -f "node server.js"
       - run: |
           cd Blogservice
