@@ -22,8 +22,19 @@ jobs:
       - run: |
           cd Authservice
           npm install
-      - run: node server.js &
-      - run: sleep 10
+          node server.js
+      - run: |
+          cd Blogservice
+          npm install
+          node server.js
+      - run: |
+          cd Commentservice
+          npm install
+          node server.js
+      - run: |
+          cd Profileservice
+          npm install
+          node server.js
       - run: npm test
 
   publish-gpr:
