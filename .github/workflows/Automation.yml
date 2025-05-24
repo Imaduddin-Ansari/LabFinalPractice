@@ -21,6 +21,10 @@ jobs:
       - run: npm --version
       - run: |
           cd Authservice
+          touch .env
+          echo "${{secrets.MONGO_URI}}">>.env
+          echo "${{secrets.JWT_SECRET}}">>.env
+          echo "${{secrets.PORT1}}">>.env
           npm install
           node server.js
       - run: |
