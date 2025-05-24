@@ -1,0 +1,48 @@
+# Backend Service (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: dataviz-ns
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+    nodePort: 30300
+  type: NodePort
+
+---
+# Frontend Service (NodePort)
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: dataviz-ns
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30173
+  type: NodePort
+
+---
+# MongoDB Service (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: dataviz-ns
+spec:
+  selector:
+    app: mongodb
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
+  type: ClusterIP
