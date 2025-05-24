@@ -37,7 +37,6 @@ jobs:
           npm install
           node server.js &
           sleep 5
-          curl http://localhost:3000/health
           pkill -f "node server.js"
       - run: |
           cd Blogservice
@@ -46,7 +45,9 @@ jobs:
           echo "PORT=${{secrets.JWT_SECRET}}">>.env
           echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
-          node server.js
+          node server.js &
+          sleep 5
+          pkill -f "node server.js"
       - run: |
           cd Commentservice
           touch .env
@@ -54,7 +55,9 @@ jobs:
           echo "PORT=${{secrets.JWT_SECRET}}">>.env
           echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
-          node server.js
+          node server.js &
+          sleep 5
+          pkill -f "node server.js"
       - run: |
           cd Profileservice
           touch .env
@@ -62,5 +65,31 @@ jobs:
           echo "PORT=${{secrets.JWT_SECRET}}">>.env
           echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
-          node server.js
+          node server.js &
+          sleep 5
+          pkill -f "node server.js"
       - run: npm test
+
+      - name : Build Auth Service Docker Image
+        run: |
+          cd Authservice
+          docker build -t authservice .
+
+      - name : Build Blog Service Docker Image
+        run: |
+          cd Blogservice
+          docker build -t blogservice .
+
+      - name : Build Comment Service Docker Image
+        run: |
+          cd Commentservice
+          docker build -t commentservice .
+
+      - name : Build Profile Service Docker Image
+        run: |
+          cd Profileservice
+          docker build -t profileservice .
+          
+      - name : Checking Images 
+        run: |
+          docker images
