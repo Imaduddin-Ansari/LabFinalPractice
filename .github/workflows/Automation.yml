@@ -38,6 +38,7 @@ jobs:
           node server.js &
           sleep 5
           pkill -f "node server.js"
+          npm test
       - run: |
           cd Blogservice
           touch .env
@@ -48,6 +49,7 @@ jobs:
           node server.js &
           sleep 5
           pkill -f "node server.js"
+          npm test
       - run: |
           cd Commentservice
           touch .env
@@ -58,6 +60,7 @@ jobs:
           node server.js &
           sleep 5
           pkill -f "node server.js"
+          npm test
       - run: |
           cd Profileservice
           touch .env
@@ -68,7 +71,7 @@ jobs:
           node server.js &
           sleep 5
           pkill -f "node server.js"
-      - run: npm test
+          npm test
 
       - name : Build Auth Service Docker Image
         run: |
