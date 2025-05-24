@@ -25,6 +25,7 @@ jobs:
           echo "${{secrets.MONGO_URI}}">>.env
           echo "${{secrets.JWT_SECRET}}">>.env
           echo "${{secrets.PORT1}}">>.env
+          cat .env
           npm install
           node server.js
       - run: |
