@@ -10,18 +10,20 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-const authRoutes = require('./routes/auth');
-const blogRoutes = require('./routes/blogs');
-const commentRoutes = require('./routes/comments');
 const profileRoutes = require('./routes/profile');
 
-app.use('/api/auth', authRoutes);
-app.use('/api/blogs', blogRoutes);
-app.use('/api/comments', commentRoutes);
 app.use('/api/profile', profileRoutes);
 
+//Adding /health and /ready that display health is good and ready displays yes
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+app.get('/ready', (req, res) => {
+  res.status(200).json({ status: 'yes' });
+});
+
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI,)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
