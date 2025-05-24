@@ -19,8 +19,9 @@ jobs:
           node-version: 20
       - run: node --version
       - run: npm --version
-      - run: cd Authservice
-      - run: npm install
+      - run: |
+          cd Authservice
+          npm install
       - run: node server.js &
       - run: sleep 10
       - run: npm test
