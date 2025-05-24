@@ -36,6 +36,7 @@ jobs:
           echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
           node server.js &
+          sleep 5
           curl -X POST https://localhost:3000/health
           pkill -f "node server.js"
       - run: |
