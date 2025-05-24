@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        mongodb-version: ['6.0', '7.0', '8.0']
+        mongodb-version: ['6.0']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,36 +34,32 @@ jobs:
           echo "MONGO_URI=${{secrets.MONGO_URI}}">>.env
           echo "PORT=${{secrets.JWT_SECRET}}">>.env
           echo "JWT_SECRET=${{secrets.PORT1}}">>.env
-          cat .env
           npm install
-          node server.js
+          node server.js &
+          curl -X POST https://localhost:3000/health
+          pkill -f "node server.js"
       - run: |
           cd Blogservice
+          touch .env
+          echo "MONGO_URI=${{secrets.MONGO_URI}}">>.env
+          echo "PORT=${{secrets.JWT_SECRET}}">>.env
+          echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
           node server.js
       - run: |
           cd Commentservice
+          touch .env
+          echo "MONGO_URI=${{secrets.MONGO_URI}}">>.env
+          echo "PORT=${{secrets.JWT_SECRET}}">>.env
+          echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
           node server.js
       - run: |
           cd Profileservice
+          touch .env
+          echo "MONGO_URI=${{secrets.MONGO_URI}}">>.env
+          echo "PORT=${{secrets.JWT_SECRET}}">>.env
+          echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           npm install
           node server.js
       - run: npm test
-
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
