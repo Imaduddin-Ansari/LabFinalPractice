@@ -22,9 +22,9 @@ jobs:
       - run: |
           cd Authservice
           touch .env
-          echo "${{secrets.MONGO_URI}}">>.env
-          echo "${{secrets.JWT_SECRET}}">>.env
-          echo "${{secrets.PORT1}}">>.env
+          echo "MONGO_URI=${{secrets.MONGO_URI}}">>.env
+          echo "PORT=${{secrets.JWT_SECRET}}">>.env
+          echo "JWT_SECRET=${{secrets.PORT1}}">>.env
           cat .env
           npm install
           node server.js
